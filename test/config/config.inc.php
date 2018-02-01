@@ -21,7 +21,7 @@ $_ENV['_config'] = [
             'password' => 'admin',
             'dbname' => 'git',
             'charset' => 'utf8',
-            'tablepre' => 'tw_',
+            'tablepre' => 't_',
             'engine' => 'MyISAM'
         ]
     ],

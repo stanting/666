@@ -104,7 +104,7 @@ class Mysql implements Idb
         if ($sql) {
             $query = $this->query("select * from {$this->tablepre}$table where $sql", $this->rlink);
             
-            while ($query) {
+            while ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
                 $keyname = $table;
                 
                 foreach ($keyarr as $k => $v) {
@@ -344,11 +344,15 @@ class Mysql implements Idb
         $s .= ($limit ? " limit $start,$limit" : '');
         
         $ret = [];
-        $query = $this->query($s, $this->rlink)->fetchAll(\PDO::FETCH_ASSOC);
-        $keystr = '';
+        $query = $this->query($s, $this->rlink);
         
-        foreach ($pri as $k) {
-            $keystr .= "-$k-" . $query[$k];
+        while ($row = $query->fetch(\PDO::FETCH_ASSOC)) {
+            $keystr = '';
+            
+            foreach ($pri as $k) {
+                $keystr .= "-$k-" . $row[$k];
+            }
+            
             $ret[] = $table . $keystr;
         }
         
@@ -494,6 +498,7 @@ class Mysql implements Idb
             $explain_str = '';
             
             if (substr($sql, 0, 6) == 'select') {
+                var_dump($sql);
                 $query = $link->query("explain $sql")->fetch(\PDO::FETCH_ASSOC);
                 
                 if ($query !== false) {

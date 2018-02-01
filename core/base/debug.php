@@ -48,7 +48,7 @@ class Debug
         $s = "[$errno_str] : $errstr";
         
         if (DEBUG) {
-            throw new \Exception($s);
+            throw new \Exception($errfile . ':' . $errline . '//' . $errstr . $errno);
         } else {
             if (in_array($errno, [E_NOTICE, E_USER_NOTICE, E_DEPRECATED])) {
                 log::write($s);
