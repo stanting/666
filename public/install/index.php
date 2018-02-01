@@ -5,7 +5,7 @@ version_compare(PHP_VERSION, '7.0.0', '>') || die('require PHP > 7.0.0 !');
 define('INSTALL', dirname(__FILE__));
 define('CORE', dirname(INSTALL));
 define('ROOT', dirname(CORE));
-define('APP_NAME', basename(CORE));
+define('APP_NAME', 'test');
 
 //error_reporting(0);
 date_default_timezone_set('Asia/ShangHai');
@@ -30,6 +30,10 @@ if ($do == 'license') {
     include INSTALL . '/tpl/license.php';
     include INSTALL . '/tpl/footer.php';
 } elseif ($do == 'check_env') {
+    include INSTALL . '/tpl/header.php';
+    include INSTALL . '/tpl/check_env.php';
+    include INSTALL . '/tpl/footer.php';
+} elseif ($do == 'check_db') {
     include INSTALL . '/tpl/header.php';
     include INSTALL . '/tpl/check_db.php';
     include INSTALL . '/tpl/footer.php';

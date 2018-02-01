@@ -391,7 +391,7 @@ function random($length, $type = 1, $chars = '0123456789abcdefghijklmnopqrstuvwx
  * @param int $type 字节
  * @return string
 */
-function get_byte($bype)
+function get_byte($byte)
 {
     if ($byte < 1024) {
         return $bype . ' Byte';

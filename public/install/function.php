@@ -42,12 +42,12 @@ function dirWrite($dir, $clear = false)
 //测试不可写
 function noWritable($dir)
 {
-    if (isWritable($dir)) {
+    if (_is_writable($dir)) {
         return false;
     } else {
         chmod($file, 0777);
         
-        return !isWritable($dir);
+        return !_is_writable($dir);
     }
 }
 
