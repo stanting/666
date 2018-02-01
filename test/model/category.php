@@ -112,8 +112,8 @@ class Category extends Model
             return $this->data['category_db'];
         }
 
-        $arr = array();
-        $tmp = $this->findFetch([], ['orderby']);
+        $arr = [];
+        $tmp = $this->findFetch([], ['orderby' =>1]);
         
         foreach($tmp as $v) {
             $arr[$v['cid']] = $v;

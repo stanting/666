@@ -67,11 +67,11 @@ class View {
         $s = preg_replace('/\{php\}(.*?)\{\/php\}/s', '<?php \\1 ?>', $s);
         
         //第四步，包含block
-        $s = preg_replace_callback('/\{block\:([a-zA-Z_]\w*)\040?([^\n\}]*?)\}(.*?){\/block}/s', [$this, 'parseBlock'], $s);
+        $s = preg_replace_callback('/\{block\:([a-zA-Z_]\w*)\s?([^\n\}]*?)\}(.*?){\/block}/s', [__CLASS__, 'parseBlock'], $s);
         
         //第五步，解析loop
-        while (preg_match('/\{loop\:\$' . $reg_arr . '(?:\040\$[a-zA-Z]\w*){1,2}\}.*?\{\/loop\}/s', $s)) {
-            $s = preg_replace_callback('/\{loop\:(\$' . $reg_arr . '(?:\040\$[a-zA-Z]\w*){1,2})\}(.*?)\{\/loop\}/s', [$this, 'parseLoop'], $s);
+        while (preg_match('/\{loop\:\$' . $reg_arr . '(?:\s\$[a-zA-Z]\w*){1,2}\}.*?\{\/loop\}/s', $s)) {
+            $s = preg_replace_callback('/\{loop\:(\$' . $reg_arr . '(?:\s\$[a-zA-Z]\w*){1,2})\}(.*?)\{\/loop\}/s', [__CLASS__, 'parseLoop'], $s);
         }
 
         //第六步，解析if
@@ -108,7 +108,6 @@ class View {
     
     private function parseBlock($matches)
     {
-        var_dump($matches);
         $func   = $matches[1];
         $config = $matches[2];
         $s      = $matches[3];
@@ -171,11 +170,13 @@ class View {
     //严格要求格式
     private function parseLoop($matches)
     {
+        var_dump($matches);
         $args = explode(' ', $this->repDouble($matches[1]));
         $s = $this->repDouble($matches[2]);
         
         $arr = $this->repVars($args[0]);
-        
+        var_dump($arr); 
+        var_dump($args);
         $v = empty($args[1]) ? '$v' : $args[1];
         $k = empty($args[2]) ? '' : $args[2] . '=>';
         
@@ -203,7 +204,6 @@ class View {
     
     private function parseVars($matches)
     {
-        var_dump($matches);
         $vars = $this->repDouble($matches[1]);
         $vars = $this->repVars($vars);
         

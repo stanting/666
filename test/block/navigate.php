@@ -8,7 +8,7 @@
 function navigate($conf)
 {
     global $run;
-    var_dump($run);
+
     $nav_arr = $run->kv->xget('navigate');
     
     foreach ($nav_arr as &$v) {

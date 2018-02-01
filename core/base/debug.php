@@ -156,8 +156,8 @@ class Debug
             }
             
             $i++;
-            $c = $i % 2 == 0 ? 'class="exent"' : '';
-            $html && is_string($v) && $v = htmlspecialchars($k);
+            $c = $i % 2 == 0 ? ' class="exent"' : '';
+            $html && is_string($v) && $v = htmlspecialchars($v);
             
             if (is_array($v) || is_object($v)) {
                 $v = gettype($v);

@@ -498,7 +498,6 @@ class Mysql implements Idb
             $explain_str = '';
             
             if (substr($sql, 0, 6) == 'select') {
-                var_dump($sql);
                 $query = $link->query("explain $sql")->fetch(\PDO::FETCH_ASSOC);
                 
                 if ($query !== false) {
