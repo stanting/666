@@ -9,11 +9,11 @@ CREATE TABLE pre_user (
   email char(40) NOT NULL DEFAULT '',			# EMAIL
   homepage char(40) NOT NULL DEFAULT '',		# 主页的URL（外链）
   intro text NOT NULL,					# 个人介绍
-  regip int(10) NOT NULL DEFAULT '0',			# 注册IP
+  regip int(10) unsigned NOT NULL DEFAULT '0',			# 注册IP
   regdate int(10) unsigned NOT NULL DEFAULT '0',	# 注册日期
-  loginip int(10) NOT NULL DEFAULT '0',			# 登陆IP
+  loginip int(10) unsigned NOT NULL DEFAULT '0',			# 登陆IP
   logindate int(10) unsigned NOT NULL DEFAULT '0',	# 登陆日期
-  lastip int(10) NOT NULL DEFAULT '0',			# 上次登陆IP
+  lastip int(10) unsigned NOT NULL DEFAULT '0',			# 上次登陆IP
   lastdate int(10) unsigned NOT NULL DEFAULT '0',	# 上次登陆日期
   contents int(10) unsigned NOT NULL DEFAULT '0',	# 内容数
   comments int(10) unsigned NOT NULL DEFAULT '0',	# 评论数

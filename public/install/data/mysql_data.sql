@@ -1,4 +1,4 @@
-INSERT INTO `pre_user_group` (`groupid`, `groupname`, `system`, `purviews`) VALUES
+INSERT INTO `pre_group` (`groupid`, `groupname`, `system`, `purviews`) VALUES
 (1, '管理员组', 1, ''),
 (2, '主编组', 1, ''),
 (3, '编辑组', 1, ''),
