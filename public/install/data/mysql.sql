@@ -82,7 +82,7 @@ CREATE TABLE pre_alias (
 
 # 单页表
 DROP TABLE IF EXISTS pre_page;
-CREATE TABLE pre_cms_page (
+CREATE TABLE pre_page (
   cid smallint(5) unsigned NOT NULL,			# 分类ID
   content mediumtext NOT NULL,				# 单页内容
   PRIMARY KEY (cid)
@@ -90,7 +90,7 @@ CREATE TABLE pre_cms_page (
 
 # 文章表 (可根据 id 范围分区, 审核/定时发布等考虑单独设计一张表)
 DROP TABLE IF EXISTS pre_article;
-CREATE TABLE pre_cms_article (
+CREATE TABLE pre_article (
   cid smallint(5) unsigned NOT NULL DEFAULT '0',	# 分类ID
   id int(10) unsigned NOT NULL AUTO_INCREMENT,		# 内容ID
   title char(80) NOT NULL DEFAULT '',			# 标题
@@ -127,8 +127,8 @@ CREATE TABLE pre_article_data (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 # 文章属性标记表
-DROP TABLE IF EXISTS pre_cms_article_flag;
-CREATE TABLE pre_cms_article_flag (
+DROP TABLE IF EXISTS pre_article_flag;
+CREATE TABLE pre_article_flag (
   flag tinyint(1) unsigned NOT NULL DEFAULT '0',	# 属性标记
   cid int(10) unsigned NOT NULL DEFAULT '0',		# 内容ID
   id int(10) unsigned NOT NULL DEFAULT '0',		# 内容ID
