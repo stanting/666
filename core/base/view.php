@@ -18,7 +18,7 @@ class View {
         $this->vars[$k] = &$v;
     }
 
-    public function assisnValue($k, $v)
+    public function assignValue($k, $v)
     {
         $this->vars[$k] = $v;
     }
@@ -170,13 +170,10 @@ class View {
     //严格要求格式
     private function parseLoop($matches)
     {
-        var_dump($matches);
         $args = explode(' ', $this->repDouble($matches[1]));
         $s = $this->repDouble($matches[2]);
         
         $arr = $this->repVars($args[0]);
-        var_dump($arr); 
-        var_dump($args);
         $v = empty($args[1]) ? '$v' : $args[1];
         $k = empty($args[2]) ? '' : $args[2] . '=>';
         

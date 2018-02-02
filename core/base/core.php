@@ -83,7 +83,7 @@ class Core
         //初始化全局变量
         $_ENV['_sqls'] = [];
         $_ENV['_include'] = [];
-        $_ENV['_time'] = [];
+        $_ENV['_time'] = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
         $_ENV['ip'] = ip();
         $_ENV['_sqlnum'] = 0;
         
@@ -141,7 +141,7 @@ class Core
             if ($url_suffix) {
                 $suf_len = strlen($url_suffix);
                 
-                if (substr($u, $suf_len) == $url_suffix) {
+                if (substr($u, -($suf_len)) == $url_suffix) {
                     $u = substr($u, 0, -$suf_len);
                 }
             }
@@ -166,7 +166,7 @@ class Core
         }
         
         $_GET['control'] = isset($_GET['control']) && preg_match('/^\w+$/', $_GET['control']) ? $_GET['control'] : 'index';
-        $_GET['action'] = isset($_GET['action']) && preg_match('/^\w+$/', $_GET['action']) ? $_GET['action'] : 'index';
+        $_GET['action']  = isset($_GET['action'])  && preg_match('/^\w+$/', $_GET['action'])  ? $_GET['action']  : 'index';
         
         //限制访问特殊控制器，直接转为404错误
         if (in_array($_GET['control'], ['error404'])) {
@@ -198,8 +198,8 @@ class Core
      */
     public static function initControl()
     {
-        $control = &$_GET['control'];
-        $action = &$_GET['action'];
+        $control = $_GET['control'];
+        $action = $_GET['action'];
         $controlname = $control . '.php';
         $objfile = RUNTIME_CONTROL . $controlname;
         
@@ -337,7 +337,7 @@ class Core
                 if (is_file($realfile)) {
                     $objfile = RUNTIME_CONTROL . $controlname;
                     self::parseAll($realfile, $objfile, "写入继承的类的编译文件 $controlname 失败");
-                    $s = str_replace_once($m[0], 'include RUNTIME_CONTROL . \'' . $controlname . "';", $m[0], $s);
+                    $s = str_replace_once($m[0], 'include RUNTIME_CONTROL . \'' . $controlname . "';" . $m[0], $s);
                 } else {
                     throw new \Exception("你继承的类文件 $controlname 不存在");
                 }
