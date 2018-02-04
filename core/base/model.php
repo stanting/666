@@ -79,7 +79,7 @@ class Model
             
             include $objfile;
             
-            $model = ucfirst(APP_NAME) . '\\Model\\' . $model;
+            $model = ucfirst(FRONT_NAME) . '\\Model\\' . $model;
             $mod = new $model();
             
             $_ENV['_models'][$modelname] = $mod;

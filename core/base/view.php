@@ -52,7 +52,7 @@ class View {
     
     private function tplParse($tpl_file)
     {
-        $reg_arr = '[a-zA-Z]\w*(?:\[\w+]|\[\'\w+\'\]|\[\$[a-zA-Z]\w*\])*';
+        $reg_arr = '[a-zA-Z_]\w*(?:\[\w+]|\[\'\w+\'\]|\[\$[a-zA-Z_]\w*\])*';
         
         $s = file_get_contents($tpl_file);
         
@@ -70,8 +70,8 @@ class View {
         $s = preg_replace_callback('/\{block\:([a-zA-Z_]\w*)\s?([^\n\}]*?)\}(.*?){\/block}/s', [__CLASS__, 'parseBlock'], $s);
         
         //第五步，解析loop
-        while (preg_match('/\{loop\:\$' . $reg_arr . '(?:\s\$[a-zA-Z]\w*){1,2}\}.*?\{\/loop\}/s', $s)) {
-            $s = preg_replace_callback('/\{loop\:(\$' . $reg_arr . '(?:\s\$[a-zA-Z]\w*){1,2})\}(.*?)\{\/loop\}/s', [__CLASS__, 'parseLoop'], $s);
+        while (preg_match('/\{loop\:\$' . $reg_arr . '(?:\040\$[a-zA-Z_]\w*){1,2}\}.*?\{\/loop\}/s', $s)) {
+            $s = preg_replace_callback('/\{loop\:(\$' . $reg_arr . '(?:\040\$[a-zA-Z_]\w*){1,2})\}(.*?)\{\/loop\}/s', [__CLASS__, 'parseLoop'], $s);
         }
 
         //第六步，解析if

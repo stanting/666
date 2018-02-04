@@ -244,7 +244,7 @@ class Mysql implements Idb
             }
         }
         
-        $this->query("update {$this->tablepre}framework_count set count='$val' where name='$table' limit 1", $this->xlink);
+        $this->query("update {$this->tablepre}table_count set count='$val' where name='$table' limit 1", $this->xlink);
         
         return $val;
     }
@@ -258,18 +258,18 @@ class Mysql implements Idb
     public function tableCount($table)
     {
         $count = false;
-        $query = $this->query("select count from {$this->tablepre}framework_count where name='$table' limit 1", $this->xlink, false);
+        $query = $this->query("select count from {$this->tablepre}table_count where name='$table' limit 1", $this->xlink, false);
         
         if ($query) {
             $count = $this->result($query, 0);
         } else {
-            throw new Exception('framework_count error');
+            throw new Exception('table_count error');
         }
         
         if ($count === false) {
             $query = $this->query("select count(*) from {$this->tablepre}$table", $this->wlink);
             $count = $this->result($query, 0);
-            $this->query("insert into {$this->tablepre}framework_count set name='$table', count='$count'", $this->xlink);
+            $this->query("insert into {$this->tablepre}table_count set name='$table', count='$count'", $this->xlink);
         }
         
         return $count;
@@ -494,6 +494,10 @@ class Mysql implements Idb
             $result = $link->query($sql);
             $runtime = number_format(microtime(1) - $start, 4);
             
+            if (!$result) {
+                $e = $link->errorinfo();
+                var_dump($e);
+            }
             //explain分析select语句
             $explain_str = '';
             
@@ -674,6 +678,8 @@ class Mysql implements Idb
      */
     public function version()
     {
-        return $this->rlink;
+        $version = $this->query("select version() as version", $this->rlink)->fetch(\PDO::FETCH_ASSOC);
+        
+        return $version['version'];
     }
 }

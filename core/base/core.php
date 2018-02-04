@@ -84,7 +84,7 @@ class Core
         $_ENV['_sqls'] = [];
         $_ENV['_include'] = [];
         $_ENV['_time'] = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
-        $_ENV['ip'] = ip();
+        $_ENV['_ip'] = ip();
         $_ENV['_sqlnum'] = 0;
         
         //输出header头

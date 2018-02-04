@@ -109,7 +109,7 @@ function _setcookie(
     $secure = false,
     $httponly = false
 ) {
-    $name = $_ENV['config']['cookie_pre'] . $name;
+    $name = $_ENV['_config']['cookie_pre'] . $name;
     
     if (!$path) {
         $path = $_ENV['_config']['cookie_path'];
@@ -504,7 +504,7 @@ function str_auth($str, $operation = 'decode', $key = '', $expiry = 0)
     $box = range(0, 255);
     
     $rndkey = [];
-    for ($i = 0; $i < 255; $i++) {
+    for ($i = 0; $i <= 255; $i++) {
         $rndkey[$i] = ord($cryptkey[$i % $key_length]);
     }
     

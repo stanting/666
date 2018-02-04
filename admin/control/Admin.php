@@ -45,7 +45,7 @@ class Admin extends Control
                     $ip       = $arr[4];
 
                     $user = &$this->user;
-                    $user_group = &$this->user_group;
+                    $user_group = &$this->group;
 
                     $this->_user = $user->get($uid);
                     $this->_group = $user_group->get($groupid);

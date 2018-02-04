@@ -14,7 +14,7 @@ class index extends Admin
         
         unset($this->_navs[1]);
         
-        $this->display();
+        $this->display('index.htm');
         
         exit;
     }
@@ -38,9 +38,43 @@ class index extends Admin
             //防止IP暴力破解
             $ip = &$_ENV['_ip'];
             
-            if (0) {
-                
+            if ($user->antiIpBrute($ip)) {
+                exit('{"name":"password", "message":"请15分钟之后再试！"}');
             }
+            
+            $data = $user->getUserByUsername($username);
+            
+            if ($data && $user->verifyPassword($password, $data['salt'], $data['password'])) {
+                $admauth = str_auth("$data[uid]\t$data[username]\t$data[password]\t$data[groupid]\t$ip", 'encode');
+		_setcookie('admauth', $admauth, 0, '', '', false, true);
+                
+                $data['lastip'] = (int)$data['loginip'];
+                $data['lastdate'] = $data['logindate'];
+                $data['loginip'] = ip2long($ip);
+                $data['logindate'] = $_ENV['_time'];
+                $data['logins']++;
+                $user->update($data);
+                
+                $this->runtime->delete('password_error_'.$ip);
+                exit('{"name":"", "message":"登录成功！"}');
+            } else {
+                // 记录密码错误日志
+                $log_password = '******'.substr($password, 6);
+                log::write("密码错误：$username - $log_password", 'loginLog.php');
+
+                // 记录密码错误次数
+                $user->password_error($ip);
+
+                exit('{"name":"password", "message":"啊哦，帐号或密码不正确！"}');
+            }
+        } else {
+            exit('{"name":"username", "message":"表单失效！请刷新后再试！"}');
         }
+    }
+    
+    public function logout()
+    {
+        _setcookie('admauth', '', 1);
+	exit('<html><body><script>window.location="index.php?u=index-login"</script></body></html>');
     }
 }
